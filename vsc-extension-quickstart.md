@@ -12,6 +12,7 @@
 ## Setup
 
 * install the recommended extensions (amodio.tsl-problem-matcher, ms-vscode.extension-test-runner, and dbaeumer.vscode-eslint)
+* install esbuildProblem Matchers by Connor Peet
 
 
 ## Get up and running straight away
