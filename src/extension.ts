@@ -18,10 +18,19 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       // Display a message box to the user
       vscode.window.showInformationMessage("Hello World from i18n-lint!");
-    },
+    }
   );
 
   context.subscriptions.push(disposable);
+
+  const i18nPlainTextLint = vscode.commands.registerCommand(
+    "i18n-lint.i18nPlainTextLint",
+    () => {
+      vscode.window.showInformationMessage("Hello from i18nPlainTextLint!");
+    }
+  );
+
+  context.subscriptions.push(i18nPlainTextLint);
 }
 
 // This method is called when your extension is deactivated
