@@ -95,6 +95,8 @@ and should be localized";
 
 const hello = "hello1";
 const hello1 = $localize`hello1`;
+const hello2 = `hello1`;
+const hello3 = "hello1";
 
 const templateMultiline = `
     This is another

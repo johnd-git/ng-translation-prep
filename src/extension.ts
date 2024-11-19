@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import * as vscode from "vscode";
 import { i18nAttributeAnalyzer } from "./i18n-attribute-analyzer";
 import { LocalizeStringAnalyzer } from "./localize-string-analyzer";

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as ts from "typescript";
+import ts from "typescript";
 
 export class LocalizeStringAnalyzer {
   // Patterns that should be ignored
@@ -17,7 +17,11 @@ export class LocalizeStringAnalyzer {
     const diagnostics: vscode.Diagnostic[] = [];
 
     const visit = (node: ts.Node) => {
-      if (ts.isStringLiteral(node)) {
+      if (
+        ts.isStringLiteral(node) ||
+        ts.isNoSubstitutionTemplateLiteral(node) ||
+        ts.isTemplateExpression(node)
+      ) {
         this.analyzeStringLiteral(node, diagnostics);
       }
       ts.forEachChild(node, visit);
@@ -28,10 +32,16 @@ export class LocalizeStringAnalyzer {
   }
 
   private analyzeStringLiteral(
-    node: ts.StringLiteral,
+    node:
+      | ts.StringLiteral
+      | ts.NoSubstitutionTemplateLiteral
+      | ts.TemplateExpression,
     diagnostics: vscode.Diagnostic[]
   ) {
-    const text = node.text;
+    const text = ts.isTemplateExpression(node)
+      ? node.head.text +
+        node.templateSpans.map((span) => span.literal.text).join("")
+      : node.text;
 
     // Skip if matches any ignore patterns
     if (this.IGNORE_PATTERNS.some((pattern) => pattern.test(text))) {
@@ -40,6 +50,21 @@ export class LocalizeStringAnalyzer {
 
     // Skip if parent is already a tagged template with $localize
     if (this.isLocalizeTaggedTemplate(node)) {
+      return;
+    }
+
+    // Skip if string is in an import statement
+    if (this.isInImportStatement(node)) {
+      return;
+    }
+
+    // Skip if string is in @Component decorator
+    if (this.isInComponentDecorator(node)) {
+      return;
+    }
+
+    // Skip if string is a method argument
+    if (this.isMethodArgument(node)) {
       return;
     }
 
@@ -67,6 +92,49 @@ export class LocalizeStringAnalyzer {
     if (node.parent && ts.isTaggedTemplateExpression(node.parent)) {
       const tag = node.parent.tag;
       return tag.getText() === "$localize";
+    }
+    return false;
+  }
+
+  private isInImportStatement(node: ts.Node): boolean {
+    let current = node;
+    while (current.parent) {
+      if (
+        ts.isImportDeclaration(current.parent) ||
+        ts.isImportSpecifier(current.parent)
+      ) {
+        return true;
+      }
+      current = current.parent;
+    }
+    return false;
+  }
+
+  private isInComponentDecorator(node: ts.Node): boolean {
+    let current = node;
+    while (current.parent) {
+      if (ts.isDecorator(current.parent)) {
+        const decorator = current.parent;
+        if (ts.isCallExpression(decorator.expression)) {
+          const decoratorName = decorator.expression.expression.getText();
+          if (decoratorName === "Component") {
+            return true;
+          }
+        }
+      }
+      current = current.parent;
+    }
+    return false;
+  }
+
+  private isMethodArgument(node: ts.Node): boolean {
+    let current = node;
+    while (current.parent) {
+      if (ts.isCallExpression(current.parent)) {
+        const callExpr = current.parent;
+        return callExpr.arguments.includes(current as ts.Expression);
+      }
+      current = current.parent;
     }
     return false;
   }
