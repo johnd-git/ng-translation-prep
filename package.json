@@ -9,9 +9,19 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:html"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "html",
+        "extensions": [
+          ".html"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "i18n-lint.helloWorld",

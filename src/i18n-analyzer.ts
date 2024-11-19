@@ -8,7 +8,7 @@ export class I18nAnalyzer {
   public analyze(): vscode.Diagnostic[] {
     const text = this.editor.document.getText();
     const diagnostics: vscode.Diagnostic[] = [];
-    const document = parse5.parse(text);
+    const document = parse5.parse(text, { sourceCodeLocationInfo: true });
 
     this.analyzeNode(document, diagnostics);
     return diagnostics;
