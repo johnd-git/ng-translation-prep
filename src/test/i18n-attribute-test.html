@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title i18n>I18n Test Page</title>
+    <title>I18n Test Page</title>
+  </head>
+  <body>
+    <!-- Examples WITHOUT i18n attributes (should show warnings) -->
+    <div title="Hover text">Missing i18n-title</div>
+
+    <input placeholder="Enter your name" value="Default value" />
+
+    <img src="test.jpg" alt="Test image" />
+
+    <button aria-label="Submit form" i18n>Click me</button>
+
+    <div aria-description="This is a description" i18n>Content here</div>
+
+    <div aria-placeholder="Placeholder text" i18n>Content here</div>
+
+    <div aria-roledescription="Custom role description" i18n>Content here</div>
+
+    <label for="test" i18n>Test label</label>
+
+    <!-- Examples WITH correct i18n attributes (should NOT show warnings) -->
+    <div
+      title="Correct hover text"
+      i18n-title="tooltip|Hover text@@hover-text"
+      i18n
+    >
+      With i18n-title
+    </div>
+
+    <input
+      placeholder="Enter your email"
+      i18n-placeholder="placeholder|Email input@@email-placeholder"
+      value="Default email"
+      i18n-value="value|Default value@@default-value"
+    />
+
+    <img
+      src="logo.jpg"
+      alt="Company logo"
+      i18n-alt="alt|Logo description@@logo-alt"
+    />
+
+    <button
+      aria-label="Submit form"
+      i18n-aria-label="aria|Submit button@@submit-btn"
+      i18n
+    >
+      Submit
+    </button>
+
+    <div
+      aria-description="Detailed description"
+      i18n-aria-description="aria|Description text@@desc-text"
+      i18n
+    >
+      Content
+    </div>
+
+    <div
+      aria-placeholder="Type here"
+      i18n-aria-placeholder="aria|Placeholder text@@place-text"
+      i18n
+    >
+      Content
+    </div>
+
+    <div
+      aria-roledescription="Special button"
+      i18n-aria-roledescription="aria|Role description@@role-desc"
+      i18n
+    >
+      Content
+    </div>
+
+    <label for="email" i18n-label="label|Email label@@email-label" i18n>
+      Email address
+    </label>
+
+    <!-- Example with multiple attributes -->
+    <input
+      type="text"
+      placeholder="Enter username"
+      i18n-placeholder="placeholder|Username input@@username-placeholder"
+      aria-label="Username input field"
+      i18n-aria-label="aria|Username field@@username-label"
+      value="John Doe"
+      i18n-value="value|Default name@@default-name"
+      title="Enter your username here"
+      i18n-title="tooltip|Username help@@username-help"
+    />
+  </body>
+</html>

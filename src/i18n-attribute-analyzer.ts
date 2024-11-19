@@ -78,23 +78,37 @@ export class i18nAttributeAnalyzer {
 
   private analyzeTextNode(node: Node, diagnostics: vscode.Diagnostic[]) {
     const content = node.value.trim();
-    if (content.length > 0 && !/^\s*$/.test(content)) {
-      const startPos = this.editor.document.positionAt(
-        node.sourceCodeLocation?.startOffset || 0
-      );
-      const endPos = this.editor.document.positionAt(
-        node.sourceCodeLocation?.endOffset || 0
-      );
-      const range = new vscode.Range(startPos, endPos);
 
-      diagnostics.push(
-        new vscode.Diagnostic(
-          range,
-          `Text "${content}" should be marked for translation using i18n`,
-          vscode.DiagnosticSeverity.Warning
-        )
-      );
+    // Skip if empty or only whitespace
+    if (content.length === 0 || /^\s*$/.test(content)) {
+      return;
     }
+
+    // Skip if only numbers
+    if (/^\d+$/.test(content)) {
+      return;
+    }
+
+    // Skip if only special characters (including common punctuation)
+    if (/^[^a-zA-Z0-9\u0080-\uFFFF]*$/.test(content)) {
+      return;
+    }
+
+    const startPos = this.editor.document.positionAt(
+      node.sourceCodeLocation?.startOffset || 0
+    );
+    const endPos = this.editor.document.positionAt(
+      node.sourceCodeLocation?.endOffset || 0
+    );
+    const range = new vscode.Range(startPos, endPos);
+
+    diagnostics.push(
+      new vscode.Diagnostic(
+        range,
+        `Text "${content}" should be marked for translation using i18n`,
+        vscode.DiagnosticSeverity.Warning
+      )
+    );
   }
 
   private isElement(node: Node): node is Element {
