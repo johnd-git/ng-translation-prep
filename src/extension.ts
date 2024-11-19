@@ -65,7 +65,27 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidCloseTextDocument((document) => {
       tsDiagnostics.delete(document.uri);
       htmlDiagnostics.delete(document.uri);
-    })
+    }),
+
+    vscode.languages.registerCodeActionsProvider(
+      ["html"],
+      {
+        provideCodeActions(document, range, context) {
+          const editor = vscode.window.visibleTextEditors.find(
+            (e) => e.document === document
+          );
+          if (!editor) {
+            return [];
+          }
+
+          const analyzer = new i18nAttributeAnalyzer(editor);
+          return analyzer.provideCodeActions(document, range, context);
+        },
+      },
+      {
+        providedCodeActionKinds: [vscode.CodeActionKind.QuickFix],
+      }
+    )
   );
 
   // Analyze all open documents
