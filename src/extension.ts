@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { I18nAnalyzer } from "./i18n-analyzer";
+import { I18nPlainTextAnalyzer } from "./i18n-plain-text-analyzer";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
         diagnosticCollection.clear();
 
         // Run analysis
-        const analyzer = new I18nAnalyzer(editor);
+        const analyzer = new I18nPlainTextAnalyzer(editor);
         const diagnostics = analyzer.analyze();
 
         // Update diagnostics
@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
       diagnosticCollection.clear();
 
       // Create analyzer instance and run analysis
-      const analyzer = new I18nAnalyzer(editor);
+      const analyzer = new I18nPlainTextAnalyzer(editor);
       const diagnostics = analyzer.analyze();
 
       // Update diagnostics

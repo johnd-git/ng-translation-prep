@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as parse5 from "parse5";
 import { Node, Element } from "parse5/dist/common/tree-adapter";
 
-export class I18nAnalyzer {
+export class I18nPlainTextAnalyzer {
   constructor(private editor: vscode.TextEditor) {}
 
   public analyze(): vscode.Diagnostic[] {
