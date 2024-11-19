@@ -94,6 +94,11 @@ export class i18nAttributeAnalyzer {
       return;
     }
 
+    // Skip if contains Angular interpolation syntax {{ }}
+    if (/{{[^}]*}}/.test(content)) {
+      return;
+    }
+
     const startPos = this.editor.document.positionAt(
       node.sourceCodeLocation?.startOffset || 0
     );
