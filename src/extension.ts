@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import * as vscode from "vscode";
 import { i18nAttributeAnalyzer } from "./i18n-attribute-analyzer";
 import { LocalizeStringAnalyzer } from "./localize-string-analyzer";
+import { isTsOrJsFile } from "./util";
 
 function runHtmlAnalyzers(editor: vscode.TextEditor): vscode.Diagnostic[] {
   const attributeAnalyzer = new i18nAttributeAnalyzer(editor);
@@ -9,26 +10,19 @@ function runHtmlAnalyzers(editor: vscode.TextEditor): vscode.Diagnostic[] {
   return [...attributeAnalyzer.analyze()];
 }
 
-// Helper to check if it's a TypeScript file we want to analyze
-function isTypeScriptFile(document: vscode.TextDocument): boolean {
-  return (
-    (document.languageId === "typescript" ||
-      document.languageId === "javascript") &&
-    (document.fileName.endsWith(".component.ts") ||
-      document.fileName.endsWith(".service.ts") ||
-      document.fileName.endsWith(".pipe.ts"))
-  );
+function runTsAnalyzers(sourceFile: ts.SourceFile): vscode.Diagnostic[] {
+  const localizeStringAnalyzer = new LocalizeStringAnalyzer(sourceFile);
+
+  return [...localizeStringAnalyzer.analyze()];
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  // Create TS diagnostic collection
-  const typescriptDiagnostics =
-    vscode.languages.createDiagnosticCollection("localize");
-  context.subscriptions.push(typescriptDiagnostics);
-
-  // Register HTML diagnostics
+  // Register HTML diagnostics collection
   const htmlDiagnostics = vscode.languages.createDiagnosticCollection("i18n");
   context.subscriptions.push(htmlDiagnostics);
+  // Register TS diagnostic collection
+  const tsDiagnostics = vscode.languages.createDiagnosticCollection("localize");
+  context.subscriptions.push(tsDiagnostics);
 
   // Function to analyze the current document
   function analyzeCurrentDocument(document: vscode.TextDocument) {
@@ -39,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
         const diagnostics = runHtmlAnalyzers(editor);
         htmlDiagnostics.set(document.uri, diagnostics);
       }
-    } else if (isTypeScriptFile(document)) {
+    } else if (isTsOrJsFile(document)) {
       try {
         const sourceFile = ts.createSourceFile(
           document.fileName,
@@ -48,13 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
           true
         );
 
-        const analyzer = new LocalizeStringAnalyzer(sourceFile);
-        const newDiagnostics = analyzer.analyze();
-
-        typescriptDiagnostics.set(document.uri, newDiagnostics);
+        tsDiagnostics.clear();
+        const diagnostics = runTsAnalyzers(sourceFile);
+        tsDiagnostics.set(document.uri, diagnostics);
       } catch (error) {
         console.error("Error analyzing TypeScript document:", error);
-        typescriptDiagnostics.set(document.uri, []);
+        tsDiagnostics.set(document.uri, []);
       }
     }
   }
@@ -70,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
     }),
 
     vscode.workspace.onDidCloseTextDocument((document) => {
-      typescriptDiagnostics.delete(document.uri);
+      tsDiagnostics.delete(document.uri);
       htmlDiagnostics.delete(document.uri);
     })
   );

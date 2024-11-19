@@ -94,6 +94,8 @@ that spans multiple lines\
 and should be localized";
 
 const hello = "hello1";
+const hello1 = $localize`hello1`;
+
 const templateMultiline = `
     This is another
     multiline message
