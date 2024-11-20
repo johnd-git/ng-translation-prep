@@ -82,7 +82,7 @@ export class LocalizeStringAnalyzer {
     diagnostics.push(
       new vscode.Diagnostic(
         range,
-        `String literal should use $localize tagged template literal`,
+        `String literal should use $localize tag`,
         vscode.DiagnosticSeverity.Warning
       )
     );

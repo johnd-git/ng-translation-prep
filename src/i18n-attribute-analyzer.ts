@@ -9,7 +9,6 @@ export type Element = DefaultTreeAdapterMap["element"];
 export type Node = DefaultTreeAdapterMap["node"];
 export type TextNode = DefaultTreeAdapterMap["textNode"];
 
-//todo: make this configurable
 const I18N_ATTRIBUTES: string[] = [
   "title",
   "placeholder",
@@ -162,7 +161,7 @@ export class i18nAttributeAnalyzer {
           // Handle text node fixes
           // Add action to add i18n attribute to parent element
           const addAttributeAction = new vscode.CodeAction(
-            "Add i18n to parent element",
+            "Add i18n to current element",
             vscode.CodeActionKind.QuickFix
           );
           addAttributeAction.diagnostics = [diagnostic];
