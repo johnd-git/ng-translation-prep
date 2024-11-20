@@ -1,36 +1,32 @@
-# ng-translation-prep README
+# ng-translation-prep
 
-This is the README for your extension "ng-translation-prep". After writing up a brief description, we recommend including the following sections.
+**ng-translation-prep** is a VS Code extension designed to simplify the internationalization (i18n) process for Angular applications. This helps developers prepare their HTML and TypeScript files for translation by automatically identifying and marking text for localization using `$localize` and `i18n` attributes.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Linting Support**: Automatically checks for missing `i18n` attributes and `$localize` tags in your Angular code.
+- **Quick Fixes**: Provides suggestions to easily add or correct localization markers.
 
-For example if there is an image subfolder under your extension project workspace:
+!Feature Example
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Tip: feature tip goes here!
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **Angular CLI**: Ensure you have Angular CLI installed to work with Angular projects.
+- **Node.js**: This extension requires Node.js to run.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-- `myExtension.enable`: Enable/disable this extension.
-- `myExtension.thing`: Set to `blah` to do something.
+- `ngTranslationPrep.enable`: Enable/disable this extension.
+- `ngTranslationPrep.autoFix`: Automatically apply fixes for missing i18n attributes.
 
 ## Known Issues
 
-- Code quick fix that wraps plain text in a span with i18n applied conflicts with the derfault behvior of VS Code that auto closes html tags. To avoid this issue overwrite the following setting in VS code settings:
-  - `"html.autoClosingTags": false,`
+- The code quick fix that wraps plain text in a span with i18n applied conflicts with the default behavior of VS Code that auto-closes HTML tags. To avoid this issue, overwrite the following setting in your VS Code settings:
+  - `"html.autoClosingTags": false`
 
 ## Release Notes
 
@@ -38,31 +34,16 @@ Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of ng-translation-prep.
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
 ## Azure DevOps
 
-- Followed instructions on [this page](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
-  - PAT for GitHub actions needs Marketplace Manage perms
-- CI/CD guidelines [here](https://code.visualstudio.com/api/working-with-extensions/continuous-integration#automated-publishing)
+- Followed instructions on this page
+  - PAT for GitHub actions needs Marketplace Manage permissions.
+- CI/CD guidelines here
+
+---
+
+Feel free to adjust any sections further to better fit your vision! How does this look?

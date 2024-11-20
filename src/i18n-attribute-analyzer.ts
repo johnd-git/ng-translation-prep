@@ -1,6 +1,13 @@
 import * as vscode from "vscode";
 import * as parse5 from "parse5";
-import { Node, Element } from "parse5/dist/common/tree-adapter";
+
+// stolen from https://github.com/angular/components/blob/main/src/cdk/schematics/utils/parse5-element.ts
+// At the time of writing `parse5` doesn't expose the node interfaces directly, even though
+// they're used as return types, but We can still access them through `DefaultTreeAdapterMap`.
+import { DefaultTreeAdapterMap } from "parse5";
+export type Element = DefaultTreeAdapterMap["element"];
+export type Node = DefaultTreeAdapterMap["node"];
+export type TextNode = DefaultTreeAdapterMap["textNode"];
 
 //todo: make this configurable
 const I18N_ATTRIBUTES: string[] = [
@@ -77,11 +84,11 @@ export class i18nAttributeAnalyzer {
         this.analyzeNode(child, diagnostics, parentHasI18n || hasI18n)
       );
     } else if (this.isTextNode(node) && !parentHasI18n) {
-      this.analyzeTextNode(node, diagnostics);
+      this.analyzeTextNode(node as TextNode, diagnostics);
     }
   }
 
-  private analyzeTextNode(node: Node, diagnostics: vscode.Diagnostic[]) {
+  private analyzeTextNode(node: TextNode, diagnostics: vscode.Diagnostic[]) {
     const content = node.value.trim();
 
     // Skip if empty or only whitespace
