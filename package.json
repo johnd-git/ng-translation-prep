@@ -1,6 +1,6 @@
 {
-  "name": "i18n-lint",
-  "displayName": "i18n-lint",
+  "name": "ng-translation-prep",
+  "displayName": "ng-translation-prep",
   "description": "angular i18n html linter",
   "version": "0.0.1",
   "engines": {
@@ -59,17 +59,17 @@
     ],
     "commands": [
       {
-        "command": "i18n-lint.helloWorld",
+        "command": "ng-translation-prep.helloWorld",
         "title": "Hello World"
       },
       {
-        "command": "i18n-lint.i18nPlainTextLint",
+        "command": "ng-translation-prep.i18nPlainTextLint",
         "title": "i18n Plain Text Lint"
       }
     ],
     "keybindings": [
       {
-        "command": "i18n-lint.i18nPlainTextLint",
+        "command": "ng-translation-prep.i18nPlainTextLint",
         "key": "ctrl+shift+l",
         "when": "editorTextFocus"
       }
