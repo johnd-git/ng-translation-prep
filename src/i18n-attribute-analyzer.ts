@@ -123,7 +123,7 @@ export class i18nAttributeAnalyzer {
 
   public provideCodeActions(
     document: vscode.TextDocument,
-    range: vscode.Range,
+    _range: vscode.Range,
     context: vscode.CodeActionContext
   ): vscode.CodeAction[] {
     const actions: vscode.CodeAction[] = [];
