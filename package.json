@@ -2,7 +2,8 @@
   "name": "ng-translation-prep",
   "displayName": "Angular Translation Prep",
   "description": "Angular i18n, i18n-*, and $localize linter",
-  "version": "0.0.4",
+  "version": "0.0.5",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.95.0"
   },
