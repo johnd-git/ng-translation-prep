@@ -2,7 +2,7 @@
   "name": "ng-translation-prep",
   "displayName": "ng-translation-prep",
   "description": "ng-translate-prep is a VS Code extension designed to assist with prep for the internationalization (i18n) process for Angular applications. This helps devs prepare their HTML and TypeScript files for translation by linting/identifying and marking text for localization using $localize, i18n, and i18n-* attributes.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.95.0"
   },
