@@ -1,6 +1,6 @@
 {
   "name": "ng-translation-prep",
-  "displayName": "ng-translation-prep",
+  "displayName": "Angular Translation Prep",
   "description": "Angular i18n, i18n-*, and $localize linter",
   "version": "0.0.3",
   "engines": {
