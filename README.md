@@ -42,6 +42,7 @@ Initial release of ng-translation-prep.
 
 - Followed instructions on this page
   - PAT for GitHub actions needs Marketplace Manage permissions.
+  - PAT needs access to All Organizations
 - CI/CD guidelines here
 
 ---
